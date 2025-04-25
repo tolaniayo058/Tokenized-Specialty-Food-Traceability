@@ -10,6 +10,8 @@ const mockClarity = {
         'is-producer-verified': vi.fn(),
         'get-producer-info': vi.fn(),
         'get-producer-id-by-address': vi.fn(),
+        'transfer-ownership': vi.fn(),
+        'get-contract-owner': vi.fn()
       }
     }
   },
@@ -43,6 +45,12 @@ const mockImplementations = {
   },
   'get-producer-id-by-address': (address) => {
     return { 'producer-id': 1 };
+  },
+  'transfer-ownership': (newOwner) => {
+    return { type: 'ok', value: true };
+  },
+  'get-contract-owner': () => {
+    return 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
   }
 };
 
@@ -63,6 +71,12 @@ describe('Producer Verification Contract', () => {
     );
     mockClarity.contracts['producer-verification'].functions['get-producer-id-by-address'].mockImplementation(
         mockImplementations['get-producer-id-by-address']
+    );
+    mockClarity.contracts['producer-verification'].functions['transfer-ownership'].mockImplementation(
+        mockImplementations['transfer-ownership']
+    );
+    mockClarity.contracts['producer-verification'].functions['get-contract-owner'].mockImplementation(
+        mockImplementations['get-contract-owner']
     );
   });
   
@@ -105,5 +119,20 @@ describe('Producer Verification Contract', () => {
     );
     
     expect(result['producer-id']).toBe(1);
+  });
+  
+  it('should transfer ownership', () => {
+    const result = mockClarity.contracts['producer-verification'].functions['transfer-ownership'](
+        'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'
+    );
+    
+    expect(result.type).toBe('ok');
+    expect(result.value).toBe(true);
+  });
+  
+  it('should get contract owner', () => {
+    const result = mockClarity.contracts['producer-verification'].functions['get-contract-owner']();
+    
+    expect(result).toBe('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
   });
 });

@@ -11,3 +11,5 @@ L
 contracts/certification.clar,2/8/28224e37ba53d70868e7d7020ff8ca71138d80b2
 K
 contracts/distribution.clar,2/2/227780b021710dc2f396cba674cc70711f09709a
+J
+tests/distribution.test.ts,4/d/4dd7a0909387b1ee211f0261dd45a43fb16eecaa
