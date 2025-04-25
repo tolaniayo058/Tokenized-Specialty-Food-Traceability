@@ -9,6 +9,11 @@ requirements = []
 path = 'contracts/producer-verification.clar'
 clarity_version = 2
 epoch = 2.5
+
+[contracts.production-method]
+path = 'contracts/production-method.clar'
+clarity_version = 2
+epoch = 2.5
 [repl.analysis]
 passes = ['check_checker']
 
